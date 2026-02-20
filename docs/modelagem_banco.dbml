@@ -1,0 +1,34 @@
+Table usuarios {
+  id int [pk, increment]
+  nome varchar
+  email varchar [unique]
+  senha varchar
+  perfil varchar // solicitante, atendente, gestor
+  data_criacao datetime
+}
+
+Table ordens_servico {
+  id int [pk, increment]
+  titulo varchar
+  descricao text
+  status varchar // aberta, em_andamento, concluida
+  prioridade int
+  solicitante_id int
+  responsavel_id int
+  data_abertura datetime
+  data_encerramento datetime
+}
+
+Table historico_ordem_servico {
+  id int [pk, increment]
+  ordem_servico_id int
+  status varchar
+  comentario text
+  atualizado_por int
+  data_atualizacao datetime
+}
+
+Ref: ordens_servico.solicitante_id > usuarios.id
+Ref: ordens_servico.responsavel_id > usuarios.id
+Ref: historico_ordem_servico.ordem_servico_id > ordens_servico.id
+Ref: historico_ordem_servico.atualizado_por > usuarios.id
